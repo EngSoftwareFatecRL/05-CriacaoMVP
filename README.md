@@ -1,4 +1,4 @@
-# 🚀 Roteiro de Implementação do MVP – Connexa (Etapa 3)
+# 🚀Implementação do MVP – Connexa (Etapa 3 - Final)
 
 ## 🎯 Objetivo da Atividade
 
@@ -327,26 +327,9 @@ Vincule com a tarefa TASK-005 através de comentários no código.
 
 ---
 
-## 🧪 Parte 4: Testes e Validação
+## 🧪 Parte 4:  Validação
 
-### 4.1. Gerando Testes com Copilot
-
-Para cada tarefa implementada, gere testes correspondentes:
-
-```prompt
-@workspace Crie testes unitários para o endpoint de cadastro (TASK-005) usando Jest.
-Os testes devem cobrir:
-1. Cadastro com sucesso
-2. Validação de campos obrigatórios
-3. Validação de domínio de email
-4. Validação de senha fraca
-5. Tentativa de cadastro com email duplicado
-6. Erro de banco de dados
-
-Use mocks para o banco de dados e bcrypt.
-```
-
-### 4.2. Checklist de Validação por Tarefa
+### 4.1. Checklist de Validação por Tarefa
 
 Antes de marcar uma tarefa como concluída:
 
@@ -478,32 +461,6 @@ Responsividade: [BREAKPOINTS]"
    ## Tarefa: TASK-XXX - [Próxima tarefa]
    ...
    ```
-
-2. **💻 Código Fonte:**
-   - Repositório Git com commits organizados por tarefa
-   - README.md com instruções de execução
-   - Comentários vinculando código às tarefas do Azure DevOps
-
-3. **📊 Relatório de Produtividade:**
-   - Tabela comparando tempo estimado vs. real
-   - Análise do impacto do Copilot na produtividade
-   - Lições aprendidas e recomendações
-
-4. **🎥 Vídeo Demonstrativo (2-3 min):**
-   - Mostrar aplicação funcionando
-   - Demonstrar uma integração completa (cadastro de usuário)
-   - Explicar brevemente como o Copilot ajudou
-
-### Estrutura de Entrega:
-```
-entrega-etapa3/
-├── prompts.md
-├── relatorio-produtividade.pdf
-├── link-repositorio.txt
-└── link-video.txt
-```
-
----
 
 ## 📖 Referências e Recursos Complementares
 
