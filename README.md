@@ -1,308 +1,526 @@
-# 📝 Roteiro Implementação do MVP — Connexa (Etapa 3)
+# 🚀 Roteiro de Implementação do MVP – Connexa (Etapa 3)
 
 ## 🎯 Objetivo da Atividade
 
-Executar as tarefas técnicas planejadas na Sprint (Etapa 2) para desenvolver uma primeira versão funcional (MVP) do produto **Connexa**. A atividade se concentrará na implementação prática utilizando **Node.js** para o back-end, **SQLite** como banco de dados e **HTML/CSS/JavaScript** para o front-end, com o auxílio do **GitHub Copilot** para acelerar o desenvolvimento.
+Implementar as **tarefas técnicas** planejadas na Sprint (Etapa 2) para desenvolver uma versão funcional (MVP) do produto **Connexa**, utilizando o **GitHub Copilot** como assistente de desenvolvimento. Esta etapa conecta o planejamento realizado no Azure DevOps com a implementação prática do código.
 
------
+---
 
-## 🔄 Continuidade do Cenário Fictício
+## 📚 Pré-requisitos e Continuidade
 
-**Produto:** *Connexa*
-**Etapa Anterior (Etapa 2):** As User Stories mais prioritárias foram selecionadas para a primeira Sprint e detalhadas em tarefas técnicas.
-**Etapa Atual (Etapa 3):** O time irá codificar e implementar as tarefas da Sprint, transformando o planejamento em um produto tangível. O foco é entregar uma funcionalidade completa, do banco de dados à interface do usuário.
+### Contexto das Etapas Anteriores
 
------
+**Etapa 1 - Requisitos:**
+- ✅ User Stories definidas e priorizadas no backlog
+- ✅ Critérios de aceitação estabelecidos
+- ✅ Funcionalidades principais identificadas
 
-## 🛠️ Ferramentas e Tecnologias
+**Etapa 2 - Tarefas e Sprint:**
+- ✅ User Stories decompostas em tarefas técnicas
+- ✅ Sprint planejada com tarefas atribuídas
+- ✅ Definition of Done estabelecida
 
-  * **Editor de Código:** Visual Studio Code (VS Code)
-  * **Assistente de IA:** GitHub Copilot / Copilot Chat
-  * **Back-end:** Node.js com a biblioteca Express
-  * **Banco de Dados:** SQLite (simples, baseado em arquivo, ideal para prototipagem)
-  * **Front-end:** HTML, CSS e JavaScript puros
+**Etapa 3 - Implementação (Atual):**
+- 🎯 Transformar tarefas técnicas em código funcional
+- 🎯 Utilizar GitHub Copilot como assistente
+- 🎯 Entregar funcionalidade completa end-to-end
 
------
+### Material Necessário
+- Acesso ao Azure DevOps com as tarefas da Sprint
+- Computador com VS Code instalado
+- Node.js versão 14 ou superior instalado
+- Conta GitHub com acesso ao Copilot (versão estudante gratuita disponível)
 
-## ⚙️ Parte 1: Configuração do Ambiente de Desenvolvimento
+---
 
-Antes de iniciar a codificação, é essencial preparar o ambiente de trabalho.
+## 🛠️ Parte 1: Preparação do Ambiente
 
-### 1.1. Pré-requisitos
+### 1.1. Instalação e Configuração Inicial
 
-Certifique-se de que todos os integrantes do grupo tenham o **Node.js** e o **VS Code** instalados em suas máquinas.
+#### Passo 1: Verificar Pré-requisitos
+```bash
+# Verificar instalação do Node.js
+node --version  # Deve retornar v14 ou superior
 
-### 1.2. Configurando o GitHub Copilot no VS Code
+# Verificar npm
+npm --version   # Deve retornar v6 ou superior
+```
 
-O Copilot será seu parceiro de programação, ajudando a gerar código, sugerir soluções e acelerar tarefas repetitivas.
+#### Passo 2: Estrutura do Projeto
+```
+connexa-mvp/
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   └── services/
+│   ├── database.js
+│   └── server.js
+├── frontend/
+│   ├── css/
+│   ├── js/
+│   └── index.html
+├── database/
+│   └── connexa.db
+└── package.json
+```
 
-1.  **Instalar a Extensão:**
-      * Abra o VS Code.
-      * Vá para a aba de **Extensões** (ícone de blocos no menu lateral ou `Ctrl+Shift+X`).
-      * Pesquise por `GitHub Copilot` e clique em **Instalar** na extensão oficial da Microsoft/GitHub.
-      * Instale também a extensão `GitHub Copilot Chat` para ter acesso à interface de chat.
-2.  **Autorizar o Acesso:**
-      * Após a instalação, um ícone de login aparecerá na barra de status inferior do VS Code.
-      * Clique nele e siga as instruções para autenticar com sua conta do GitHub que possui acesso ao Copilot.
+### 1.2. Configuração do GitHub Copilot
 
-### 1.3. Estrutura Inicial do Projeto
+#### 📋 Checklist de Configuração
 
-1.  Crie uma pasta principal para o projeto: `connexa-mvp`.
-2.  Abra esta pasta no VS Code.
-3.  Abra um terminal integrado (`Ctrl+'`) e inicie um projeto Node.js:
-    ```bash
-    npm init -y
-    ```
-4.  Instale as dependências necessárias:
-      * **Express:** Para criar o servidor web.
-      * **SQLite3:** Para interagir com o banco de dados SQLite.
-      * **sqlite:** Um wrapper que facilita o uso do SQLite com `async/await`.
-    <!-- end list -->
-    ```bash
-    npm install express sqlite sqlite3
-    ```
+1. **Instalar Extensões no VS Code:**
+   - [ ] GitHub Copilot
+   - [ ] GitHub Copilot Chat
+   - [ ] SQLite Viewer (opcional, para visualizar o banco)
 
------
+2. **Ativar o Copilot:**
+   ```
+   1. Abrir VS Code
+   2. Pressionar Ctrl+Shift+X (Extensões)
+   3. Buscar "GitHub Copilot"
+   4. Instalar ambas extensões
+   5. Fazer login com conta GitHub
+   6. Verificar ícone do Copilot na barra inferior
+   ```
 
-## 🤖 Parte 2: Usando o GitHub Copilot como Agente de Desenvolvimento
+3. **Testar Funcionamento:**
+   - Criar arquivo `test.js`
+   - Digitar: `// função para calcular média`
+   - Aguardar sugestão do Copilot (texto em cinza)
+   - Pressionar Tab para aceitar
 
-O Copilot Chat (`Ctrl+Shift+I`) no VS Code atua como um "agente" que entende o contexto do seu projeto. Você pode pedir para ele criar arquivos, explicar código ou gerar trechos complexos a partir de uma descrição.
+---
 
-**Boas práticas para criar prompts no modo agente (`@workspace`):**
+## 🤖 Parte 2: Estratégias de Uso do GitHub Copilot
 
-  * **Dê Contexto:** Comece explicando o objetivo. Em vez de "crie um endpoint", diga "Estou criando uma API para um sistema de grupos de estudo chamado Connexa. Crie um endpoint para cadastro de usuários".
-  * **Seja Específico:** Detalhe a estrutura de dados, os nomes dos campos, as validações necessárias e o comportamento esperado (ex: "o endpoint deve receber um JSON com nome, email e senha e salvar na tabela 'usuarios'").
-  * **Itere:** Use o primeiro resultado como ponto de partida. Peça para o Copilot refinar, adicionar tratamento de erros, ou explicar uma parte do código que ele gerou.
+### 2.1. Modos de Interação
 
------
+#### Modo 1: Autocompletar (Inline)
+- **Quando usar:** Código simples e repetitivo
+- **Como ativar:** Apenas comece a digitar
+- **Exemplo:** Loops, validações básicas, imports
 
-## 🚀 Parte 3: Implementando a Primeira Funcionalidade (Exemplo: Cadastro de Usuário)
+#### Modo 2: Chat (@workspace)
+- **Quando usar:** Arquitetura, estrutura de projeto, código complexo
+- **Como ativar:** Ctrl+Shift+I
+- **Exemplo:** Criar estrutura completa de uma funcionalidade
 
-Vamos usar uma das tarefas da Sprint para ilustrar o fluxo de trabalho completo.
+#### Modo 3: Comandos Rápidos
+- **Quando usar:** Refatoração, documentação, testes
+- **Como ativar:** Selecionar código → Botão direito → Copilot
+- **Exemplo:** "Explain this", "Fix this", "Generate tests"
 
-### 3.1. Camada de Dados: Criando a Tabela com SQLite
+### 2.2. Anatomia de um Prompt Eficaz
 
-O SQLite não requer um servidor. O banco de dados será um simples arquivo no seu projeto (ex: `connexa.db`).
+```
+[CONTEXTO] + [AÇÃO ESPECÍFICA] + [DETALHES TÉCNICOS] + [FORMATO ESPERADO]
+```
 
-#### Exemplo de Prompt para o GitHub Copilot Chat:
+#### Exemplo Prático:
+```
+❌ Prompt Vago:
+"Crie um endpoint de cadastro"
 
-Abra o chat do Copilot e use o seguinte prompt para criar um script de inicialização do banco de dados.
+✅ Prompt Eficaz:
+"Estou desenvolvendo a API REST do Connexa, um sistema de grupos de estudo universitário. 
+Preciso criar um endpoint POST /api/usuarios/cadastro usando Express.js que:
+1. Receba JSON com: nomeCompleto, email, curso, semestre, senha
+2. Valide email institucional (domínio @universidade.edu.br)
+3. Hash da senha com bcrypt
+4. Salve no SQLite na tabela 'usuarios'
+5. Retorne status 201 com ID do usuário criado
+6. Trate erros de email duplicado com status 409"
+```
+
+---
+
+## 📝 Parte 3: Implementação Guiada por Tarefas
+
+### 3.1. Mapeamento Tarefa → Código
+
+Para cada tarefa técnica definida na Sprint (Etapa 2), seguiremos este processo:
+
+```mermaid
+graph LR
+    A[Tarefa no Azure DevOps] --> B[Identificar Componentes]
+    B --> C[Criar Prompt Contextualizado]
+    C --> D[Gerar Código com Copilot]
+    D --> E[Revisar e Testar]
+    E --> F[Marcar como Concluída]
+```
+
+### 3.2. Exemplo Completo: Da Tarefa ao Código
+
+#### 📋 Tarefa Original (Azure DevOps)
+**ID:** TASK-005  
+**Título:** Back-end: Criar endpoint POST /api/usuarios/cadastro  
+**User Story Pai:** Cadastro de Usuário  
+**Responsável:** João Silva  
+**Estimativa:** 4 horas  
+
+#### 🔄 Processo de Implementação
+
+**PASSO 1: Preparar o Contexto**
+
+Abra o Copilot Chat e forneça o contexto do projeto:
 
 ```prompt
-Usando as bibliotecas 'sqlite' e 'sqlite3' para Node.js, crie um script chamado 'database.js' que inicializa o banco de dados. Este script deve criar um arquivo de banco de dados chamado 'connexa.db' e, se não existir, criar uma tabela 'usuarios' com os seguintes campos: id (chave primária, autoincremento), nome (texto, não nulo), email (texto, único, não nulo), curso (texto), semestre (inteiro) e senha (texto, não nulo).
+@workspace Vou implementar a tarefa TASK-005 do nosso Sprint.
+
+Contexto do Projeto Connexa:
+- Plataforma web para grupos de estudo universitário
+- Stack: Node.js + Express + SQLite + HTML/CSS/JS
+- Já temos a estrutura básica do projeto criada
+
+User Story: Como aluno universitário, quero me cadastrar usando email institucional
+
+Critérios de Aceitação da Story:
+1. Validar domínio @universidade.edu.br
+2. Senha com 8+ caracteres, maiúscula, minúscula e número
+3. Não permitir emails duplicados
+4. Enviar email de confirmação
+5. Mensagens de erro claras
+
+Tarefa Específica: Criar endpoint POST /api/usuarios/cadastro
 ```
 
-O Copilot deve gerar um código similar a este para seu arquivo `database.js`:
-
-```javascript
-// database.js
-const sqlite3 = require('sqlite3').verbose();
-const { open } = require('sqlite');
-
-async function setup() {
-  const db = await open({
-    filename: './connexa.db',
-    driver: sqlite3.Database
-  });
-
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS usuarios (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nome TEXT NOT NULL,
-      email TEXT NOT NULL UNIQUE,
-      curso TEXT,
-      semestre INTEGER,
-      senha TEXT NOT NULL
-    );
-  `);
-
-  console.log('Banco de dados e tabela de usuários criados com sucesso.');
-  return db;
-}
-
-setup();
-```
-
-Execute o script uma vez para criar o arquivo do banco de dados: `node database.js`.
-
-### 3.2. Camada de Lógica: Criando o Endpoint no Back-end
-
-Agora, vamos criar o servidor web e o endpoint de cadastro.
-
-#### Exemplo de Prompt para o GitHub Copilot Chat:
+**PASSO 2: Solicitar Implementação Incremental**
 
 ```prompt
-Estou usando Express.js. Crie um servidor básico em um arquivo 'server.js'. Adicione um endpoint POST em '/api/usuarios/cadastro'. Este endpoint deve:
-1. Receber no corpo da requisição um JSON com: nomeCompleto, email, curso, semestre e senha.
-2. Conectar ao banco de dados SQLite 'connexa.db'.
-3. Inserir os dados recebidos na tabela 'usuarios'.
-4. Retornar uma resposta de sucesso (status 201) com uma mensagem se o cadastro for bem-sucedido.
-5. Retornar uma resposta de erro (status 400) se algum campo obrigatório estiver faltando.
-6. Retornar um erro (status 500) se houver um problema no banco de dados, como um e-mail duplicado.
-Adicione o middleware 'express.json()' para processar o corpo da requisição.
+@workspace Baseado no contexto acima, implemente o endpoint de cadastro em etapas:
+
+1. Primeiro, crie a estrutura básica do endpoint em routes/usuarios.js
+2. Adicione validação dos campos obrigatórios
+3. Implemente a validação do domínio do email
+4. Adicione verificação de email duplicado no banco
+5. Implemente hash de senha com bcrypt
+6. Adicione tratamento de erros apropriado
+
+Use as melhores práticas de segurança e organize o código de forma modular.
 ```
 
-O Copilot deve gerar um código para o arquivo `server.js` parecido com:
+**PASSO 3: Código Gerado e Refinamento**
+
+O Copilot gerará algo similar a:
 
 ```javascript
-// server.js
+// routes/usuarios.js
 const express = require('express');
-const { open } = require('sqlite');
-const sqlite3 = require('sqlite3');
+const bcrypt = require('bcrypt');
+const router = express.Router();
+const { validarEmail, validarSenha } = require('../utils/validators');
+const db = require('../database');
 
-const app = express();
-app.use(express.json()); // Middleware para parsear JSON
-
-let db;
-
-// Conecta ao banco de dados
-(async () => {
-    db = await open({
-        filename: './connexa.db',
-        driver: sqlite3.Database
-    });
-})();
-
-// Endpoint de cadastro
-app.post('/api/usuarios/cadastro', async (req, res) => {
+/**
+ * POST /api/usuarios/cadastro
+ * Tarefa: TASK-005
+ * User Story: Cadastro de Usuário
+ * 
+ * Critérios implementados:
+ * - Validação de domínio institucional
+ * - Regras de complexidade de senha
+ * - Prevenção de emails duplicados
+ * - Hash seguro de senha
+ */
+router.post('/cadastro', async (req, res) => {
     const { nomeCompleto, email, curso, semestre, senha } = req.body;
 
+    // 1. Validar campos obrigatórios
     if (!nomeCompleto || !email || !senha) {
-        return res.status(400).json({ error: 'Nome, e-mail e senha são obrigatórios.' });
+        return res.status(400).json({ 
+            erro: 'Nome completo, email e senha são obrigatórios',
+            camposFaltantes: {
+                nomeCompleto: !nomeCompleto,
+                email: !email,
+                senha: !senha
+            }
+        });
+    }
+
+    // 2. Validar domínio do email institucional
+    const dominioValido = '@universidade.edu.br';
+    if (!email.endsWith(dominioValido)) {
+        return res.status(400).json({ 
+            erro: `Email deve ser do domínio institucional ${dominioValido}`,
+            emailInformado: email
+        });
+    }
+
+    // 3. Validar complexidade da senha
+    const regexSenha = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!regexSenha.test(senha)) {
+        return res.status(400).json({ 
+            erro: 'Senha deve ter no mínimo 8 caracteres, incluindo maiúscula, minúscula e número',
+            requisitos: {
+                tamanhoMinimo: 8,
+                maiuscula: true,
+                minuscula: true,
+                numero: true
+            }
+        });
     }
 
     try {
-        const result = await db.run(
-            'INSERT INTO usuarios (nome, email, curso, semestre, senha) VALUES (?, ?, ?, ?, ?)',
-            [nomeCompleto, email, curso, semestre, senha]
+        // 4. Verificar se email já existe
+        const usuarioExistente = await db.get(
+            'SELECT id FROM usuarios WHERE email = ?',
+            [email]
         );
-        res.status(201).json({ message: 'Usuário cadastrado com sucesso!', userId: result.lastID });
-    } catch (error) {
-        if (error.code === 'SQLITE_CONSTRAINT') {
-            return res.status(400).json({ error: 'O e-mail informado já está em uso.' });
+
+        if (usuarioExistente) {
+            return res.status(409).json({ 
+                erro: 'Este email já está cadastrado no sistema'
+            });
         }
-        res.status(500).json({ error: 'Erro ao cadastrar usuário.', details: error.message });
+
+        // 5. Criar hash da senha
+        const saltRounds = 10;
+        const senhaHash = await bcrypt.hash(senha, saltRounds);
+
+        // 6. Inserir usuário no banco
+        const resultado = await db.run(
+            `INSERT INTO usuarios (nome, email, curso, semestre, senha, criado_em) 
+             VALUES (?, ?, ?, ?, ?, datetime('now'))`,
+            [nomeCompleto, email, curso, semestre, senhaHash]
+        );
+
+        // 7. TODO: Implementar envio de email de confirmação
+        // await enviarEmailConfirmacao(email, nomeCompleto);
+
+        res.status(201).json({ 
+            mensagem: 'Usuário cadastrado com sucesso!',
+            usuarioId: resultado.lastID,
+            proximoPasso: 'Verifique seu email para confirmar o cadastro'
+        });
+
+    } catch (erro) {
+        console.error('Erro ao cadastrar usuário:', erro);
+        res.status(500).json({ 
+            erro: 'Erro interno ao processar cadastro',
+            suporte: 'Entre em contato com suporte@connexa.com'
+        });
     }
 });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
+module.exports = router;
 ```
 
-### 3.3. Camada de Apresentação: Criando o Formulário no Front-end
+### 3.3. Implementação do Frontend Vinculado
 
-Por fim, crie a interface que o usuário utilizará.
-
-#### Exemplo de Prompt para o GitHub Copilot Chat:
+**PASSO 4: Criar Interface Correspondente**
 
 ```prompt
-Crie um arquivo HTML chamado 'index.html'. Ele deve conter um formulário de cadastro para a plataforma Connexa com os campos: "Nome Completo", "E-mail Institucional", "Curso", "Semestre" e "Senha".
-Adicione um script JavaScript que:
-1. Intercepte o evento de submit do formulário.
-2. Capture os valores dos campos.
-3. Envie uma requisição POST para o endpoint '/api/usuarios/cadastro' usando a API Fetch.
-4. Exiba uma mensagem de sucesso ou erro em um parágrafo abaixo do formulário com base na resposta do servidor.
-Adicione um estilo CSS básico para centralizar o formulário e dar uma aparência limpa.
+@workspace Agora preciso criar o frontend para consumir o endpoint TASK-005 que acabamos de criar.
+
+Crie um formulário HTML/CSS/JS em frontend/cadastro.html que:
+1. Tenha os campos correspondentes ao endpoint
+2. Faça validação em tempo real dos campos
+3. Mostre feedback visual durante o envio
+4. Exiba mensagens de sucesso/erro retornadas pelo backend
+5. Use design responsivo e acessível
+6. Siga as cores da identidade visual: azul (#007bff) e branco
+
+Vincule com a tarefa TASK-005 através de comentários no código.
 ```
 
-O Copilot irá gerar o `index.html` com HTML, CSS e JavaScript integrados:
+---
 
-```html
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF--8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - Connexa</title>
-    <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; }
-        .container { padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        form { display: flex; flex-direction: column; gap: 1rem; }
-        input { padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
-        button { padding: 0.7rem; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
-        #message { margin-top: 1rem; text-align: center; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Crie sua Conta na Connexa</h2>
-        <form id="cadastroForm">
-            <input type="text" id="nome" placeholder="Nome Completo" required>
-            <input type="email" id="email" placeholder="E-mail Institucional" required>
-            <input type="text" id="curso" placeholder="Curso">
-            <input type="number" id="semestre" placeholder="Semestre">
-            <input type="password" id="senha" placeholder="Senha" required>
-            <button type="submit">Cadastrar</button>
-        </form>
-        <p id="message"></p>
-    </div>
+## 🧪 Parte 4: Testes e Validação
 
-    <script>
-        document.getElementById('cadastroForm').addEventListener('submit', async function(event) {
-            event.preventDefault(); // Impede o recarregamento da página
+### 4.1. Gerando Testes com Copilot
 
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-            const curso = document.getElementById('curso').value;
-            const semestre = document.getElementById('semestre').value;
-            const senha = document.getElementById('senha').value;
-            const messageEl = document.getElementById('message');
+Para cada tarefa implementada, gere testes correspondentes:
 
-            try {
-                const response = await fetch('/api/usuarios/cadastro', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        nomeCompleto: nome,
-                        email: email,
-                        curso: curso,
-                        semestre: parseInt(semestre),
-                        senha: senha
-                    })
-                });
+```prompt
+@workspace Crie testes unitários para o endpoint de cadastro (TASK-005) usando Jest.
+Os testes devem cobrir:
+1. Cadastro com sucesso
+2. Validação de campos obrigatórios
+3. Validação de domínio de email
+4. Validação de senha fraca
+5. Tentativa de cadastro com email duplicado
+6. Erro de banco de dados
 
-                const data = await response.json();
-
-                if (response.ok) {
-                    messageEl.textContent = data.message;
-                    messageEl.style.color = 'green';
-                } else {
-                    messageEl.textContent = 'Erro: ' + data.error;
-                    messageEl.style.color = 'red';
-                }
-            } catch (error) {
-                messageEl.textContent = 'Erro de conexão com o servidor.';
-                messageEl.style.color = 'red';
-            }
-        });
-    </script>
-</body>
-</html>
+Use mocks para o banco de dados e bcrypt.
 ```
 
------
+### 4.2. Checklist de Validação por Tarefa
+
+Antes de marcar uma tarefa como concluída:
+
+- [ ] Código atende todos os critérios de aceitação da User Story
+- [ ] Testes unitários passando
+- [ ] Código revisado por outro membro (pair programming)
+- [ ] Frontend e backend integrados e funcionando
+- [ ] Documentação inline adequada
+- [ ] Sem erros no console ou warnings
+- [ ] Tarefa atualizada no Azure DevOps
+
+---
+
+## 📊 Parte 5: Métricas e Acompanhamento
+
+### 5.1. Registro de Produtividade
+
+Para cada tarefa, registre:
+
+| Tarefa ID | Tempo Estimado | Tempo Real | Prompts Usados | Retrabalho | Observações |
+|-----------|----------------|------------|----------------|------------|-------------|
+| TASK-005  | 4h            | 2.5h       | 6              | 1x         | Copilot acelerou validações |
+| TASK-006  | 2h            | 1.5h       | 3              | 0x         | Reutilizou código anterior |
+
+### 5.2. Aprendizados e Melhores Práticas
+
+**✅ O que funciona bem:**
+- Prompts com contexto detalhado e exemplos
+- Implementação incremental (pequenos passos)
+- Revisão imediata do código gerado
+- Comentários vinculando código às tarefas
+
+**❌ O que evitar:**
+- Aceitar código sem entender
+- Prompts muito genéricos
+- Pular a fase de testes
+- Não documentar decisões técnicas
+
+---
+
+## 🎯 Parte 6: Exercício Prático Progressivo
+
+### Nível 1: Tarefa Simples (30 min)
+**Objetivo:** Criar modelo de dados para grupos de estudo
+
+```prompt
+Tarefa TASK-010: Criar tabela 'grupos' no SQLite
+Campos: id, nome, materia, objetivo, local, limite_participantes, criador_id, criado_em
+```
+
+### Nível 2: Tarefa Média (1h)
+**Objetivo:** Implementar listagem de grupos
+
+```prompt
+Tarefa TASK-015: Criar endpoint GET /api/grupos com filtros por matéria e local
+Deve retornar JSON paginado com 10 grupos por página
+```
+
+### Nível 3: Tarefa Complexa (2h)
+**Objetivo:** Sistema de participação em grupos
+
+```prompt
+Tarefa TASK-020: Implementar funcionalidade completa de participação
+- POST /api/grupos/:id/participar
+- DELETE /api/grupos/:id/sair
+- GET /api/grupos/:id/participantes
+- Validar limite de participantes
+- Impedir criador de sair do próprio grupo
+```
+
+---
+
+## 🚀 Parte 7: Dicas Avançadas
+
+### 7.1. Padrões de Prompt por Tipo de Tarefa
+
+#### Para Criação de APIs:
+```
+"Crie um endpoint [MÉTODO] [ROTA] que [OBJETIVO].
+Entrada: [ESTRUTURA_DADOS]
+Validações: [LISTA_VALIDAÇÕES]
+Resposta sucesso: [STATUS] com [DADOS]
+Resposta erro: [CENÁRIOS_ERRO]
+Segurança: [CONSIDERAÇÕES]"
+```
+
+#### Para Interfaces:
+```
+"Crie uma interface [TIPO] para [FUNCIONALIDADE].
+Campos: [LISTA_CAMPOS]
+Validações visuais: [FEEDBACK_TEMPO_REAL]
+Integração: [ENDPOINT_BACKEND]
+Acessibilidade: [REQUISITOS_A11Y]
+Responsividade: [BREAKPOINTS]"
+```
+
+### 7.2. Troubleshooting Comum
+
+| Problema | Solução |
+|----------|---------|
+| Copilot não sugere nada | Adicione mais contexto ou comentários |
+| Código incorreto/inseguro | Seja mais específico sobre requisitos de segurança |
+| Sugestões repetitivas | Use "Alternative approach:" no prompt |
+| Código não funciona | Peça explicação passo a passo primeiro |
+
+---
 
 ## ✅ Critérios de Entrega (Via Microsoft Teams)
 
-A entrega da atividade deverá ser feita na plataforma Microsoft Teams, contendo os seguintes itens:
+### Entregáveis Obrigatórios:
 
-1.  **Prompt do Back-end:** O texto exato do prompt que seu grupo utilizou no GitHub Copilot Chat para gerar o endpoint de criação de uma das funcionalidades (ex: cadastro de usuário, criação de grupo, etc.).
+1. **📝 Documento de Prompts (prompts.md):**
+   ```markdown
+   # Prompts Utilizados - Grupo X
 
-2.  **Prompt do Front-end:** O texto exato do prompt utilizado para gerar a interface HTML/CSS/JavaScript correspondente à funcionalidade do back-end.
+   ## Tarefa: TASK-005 - Endpoint de Cadastro
+   ### Prompt Backend:
+   [Texto completo do prompt usado]
+   
+   ### Resultado:
+   [Breve descrição do código gerado]
+   
+   ### Prompt Frontend:
+   [Texto completo do prompt usado]
+   
+   ### Resultado:
+   [Breve descrição da interface gerada]
+   
+   ## Tarefa: TASK-XXX - [Próxima tarefa]
+   ...
+   ```
 
------
+2. **💻 Código Fonte:**
+   - Repositório Git com commits organizados por tarefa
+   - README.md com instruções de execução
+   - Comentários vinculando código às tarefas do Azure DevOps
+
+3. **📊 Relatório de Produtividade:**
+   - Tabela comparando tempo estimado vs. real
+   - Análise do impacto do Copilot na produtividade
+   - Lições aprendidas e recomendações
+
+4. **🎥 Vídeo Demonstrativo (2-3 min):**
+   - Mostrar aplicação funcionando
+   - Demonstrar uma integração completa (cadastro de usuário)
+   - Explicar brevemente como o Copilot ajudou
+
+### Estrutura de Entrega:
+```
+entrega-etapa3/
+├── prompts.md
+├── relatorio-produtividade.pdf
+├── link-repositorio.txt
+└── link-video.txt
+```
+
+---
 
 ## 📖 Referências e Recursos Complementares
 
-  * **Node.js:**
-      * [Documentação Oficial do Node.js](https://nodejs.org/en/docs/)
-  * **Express.js:**
-      * [Site Oficial do Express](https://expressjs.com/pt-br/)
-  * **SQLite:**
-      * [Documentação da biblioteca `sqlite`](https://www.google.com/search?q=%5Bhttps://www.npmjs.com/package/sqlite%5D\(https://www.npmjs.com/package/sqlite\))
-  * **GitHub Copilot:**
-      * [Documentação do GitHub Copilot Chat](https://docs.github.com/pt/copilot/github-copilot-chat/using-github-copilot-chat-in-your-ide)
-  * **Fetch API (para o front-end):**
-      * [Guia da MDN sobre Fetch API](https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch)
+### Documentação Oficial
+- [GitHub Copilot Docs](https://docs.github.com/pt/copilot)
+- [Copilot Best Practices](https://github.blog/2023-06-20-how-to-write-better-prompts-for-github-copilot/)
+- [Express.js Guide](https://expressjs.com/pt-br/guide/routing.html)
+- [SQLite com Node.js](https://www.sqlitetutorial.net/sqlite-nodejs/)
+
+### Vídeos Tutoriais
+- [GitHub Copilot in VS Code](https://www.youtube.com/watch?v=jXp5D5ZnxGM)
+- [Building REST APIs with Express](https://www.youtube.com/watch?v=l8WPWK9mS5M)
+
+### Ferramentas Auxiliares
+- [Postman](https://www.postman.com/) - Testar APIs
+- [DB Browser for SQLite](https://sqlitebrowser.org/) - Visualizar banco
+- [Excalidraw](https://excalidraw.com/) - Diagramas rápidos
+
+
+
