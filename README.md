@@ -441,26 +441,14 @@ Responsividade: [BREAKPOINTS]"
 
 ### Entregáveis Obrigatórios:
 
-1. **📝 Documento de Prompts (prompts.md):**
-   ```markdown
-   # Prompts Utilizados - Grupo X
+### URL do Projeto no Azure DevOps:
+- No painel do seu projeto, copie a URL completa do navegador.
 
-   ## Tarefa: TASK-005 - Endpoint de Cadastro
-   ### Prompt Backend:
-   [Texto completo do prompt usado]
-   
-   ### Resultado:
-   [Breve descrição do código gerado]
-   
-   ### Prompt Frontend:
-   [Texto completo do prompt usado]
-   
-   ### Resultado:
-   [Breve descrição da interface gerada]
-   
-   ## Tarefa: TASK-XXX - [Próxima tarefa]
-   ...
-   ```
+### Arquivo texto contendo prompts: 
+- Um arquivo texto contendo o seu prompt para pelo menos duas tarefas: 1 do front e outra do back
+
+### Print do seu projeto executando: 
+- Um print do seu projeto executando a implementação do cadastro de usuários.
 
 ## 📖 Referências e Recursos Complementares
 
