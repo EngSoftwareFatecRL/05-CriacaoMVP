@@ -25,7 +25,7 @@ Implementar as **tarefas técnicas** planejadas na Sprint (Etapa 2) para desenvo
 - 🎯 Transformar tarefas técnicas em código funcional
 - 🎯 Utilizar GitHub Copilot como assistente
 - 🎯 Entregar funcionalidade completa end-to-end
-- 🎯 Submeter o código ao **Azure Repos** (vinculado ao mesmo projeto Azure DevOps das etapas anteriores)
+- 🎯 Submeter o código ao repositório do grupo — **Azure Repos** (integrado ao projeto Azure DevOps) **ou GitHub** (veja [Caminho Alternativo](#-caminho-alternativo-repositório-no-github))
 
 ### Material Necessário
 - Acesso ao **mesmo projeto** Azure DevOps criado na Etapa 1 (ex: `Connexa-Grupo01`) com o backlog e a Sprint configurados
@@ -92,6 +92,101 @@ connexa-mvp/
    - Digitar: `// função para calcular média`
    - Aguardar sugestão do Copilot (texto em cinza)
    - Pressionar Tab para aceitar
+
+---
+
+### 1.3. Configuração do Repositório de Código
+
+O código implementado nesta etapa precisa ser versionado em um repositório Git. O grupo deve escolher **uma** das duas opções abaixo e usá-la de forma consistente.
+
+---
+
+#### 🔵 Opção A: Azure Repos (integrado ao projeto Azure DevOps)
+
+Esta é a opção que mantém tudo dentro do mesmo ecossistema Azure DevOps já usado nas Etapas 1 e 2, permitindo vincular commits diretamente a work items (tasks) do Azure Boards.
+
+**Passo a passo:**
+
+1. Acesse seu projeto no Azure DevOps (ex: `Connexa-Grupo01`)
+2. No menu lateral, clique em **Repos** → **Files**
+3. Se o repositório estiver vazio, siga as instruções de inicialização exibidas na tela:
+   ```bash
+   git init
+   git remote add origin https://dev.azure.com/SUA_ORG/Connexa-Grupo01/_git/Connexa-Grupo01
+   git add .
+   git commit -m "feat: estrutura inicial do projeto Connexa"
+   git push -u origin main
+   ```
+4. Instale a extensão **[Azure Repos](https://marketplace.visualstudio.com/items?itemName=ms-vsts.team)** no VS Code para acesso direto pelo editor.
+
+**Vincular um commit a uma task do Azure Boards:**
+```bash
+# Inclua o ID da task no Azure DevOps na mensagem do commit
+git commit -m "feat: criar endpoint POST /api/usuarios/cadastro #47"
+```
+O `#47` (ID real da sua task) cria um link automático entre o commit e o work item no Azure Boards.
+
+---
+
+#### 🟢 Opção B: GitHub (alternativa ao Azure Repos) <a name="-caminho-alternativo-repositório-no-github"></a>
+
+Esta opção usa o GitHub como repositório de código. O grupo continua usando o **Azure DevOps Boards** para gerenciar as tasks e a Sprint — apenas o repositório de código muda para o GitHub.
+
+> ✅ **Quando preferir esta opção:** o grupo já tem familiaridade com GitHub, deseja integrar facilmente com as opções de deploy (Render, Railway, GitHub Pages) ou pretende usar o GitHub Actions para CI.
+
+**Passo a passo:**
+
+1. Um integrante cria um **repositório privado** no GitHub:
+   - Acesse [https://github.com/new](https://github.com/new)
+   - Nome sugerido: `connexa-mvp` ou `connexa-grupo01`
+   - Visibilidade: **Private**
+   - Clique em **Create repository**
+
+2. Clone e configure o repositório localmente:
+   ```bash
+   git init
+   git remote add origin https://github.com/SEU_USUARIO/connexa-mvp.git
+   git add .
+   git commit -m "feat: estrutura inicial do projeto Connexa"
+   git push -u origin main
+   ```
+
+3. Convide os demais integrantes do grupo:
+   - No repositório → **Settings** → **Collaborators** → **Add people**
+
+4. **Vincular commits às tasks do Azure DevOps (opcional mas recomendado):**
+   Inclua o ID da task do Azure Boards na mensagem do commit para manter a rastreabilidade:
+   ```bash
+   # Formato: AB#ID_DA_TASK
+   git commit -m "feat: criar endpoint POST /api/usuarios/cadastro AB#47"
+   ```
+   Para ativar a integração automática entre GitHub e Azure Boards, configure o **GitHub App do Azure Boards**:
+   - No Azure DevOps → **Project Settings** → **GitHub connections** → **Connect your GitHub account**
+   - Após conectar, referências `AB#47` nos commits e PRs aparecem automaticamente no work item.
+
+5. **Boas práticas de branch:**
+   ```bash
+   # Crie uma branch para cada task antes de começar a implementar
+   git checkout -b feature/cadastro-usuario
+
+   # Após concluir, abra um Pull Request para a branch main
+   # O Code Review do DoD pode ser feito diretamente no PR do GitHub
+   ```
+
+**📋 Checklist da Opção B:**
+- [ ] Repositório criado como **privado** no GitHub
+- [ ] Todos os integrantes adicionados como colaboradores
+- [ ] `.gitignore` configurado (Node.js) — inclui `node_modules/`, `.env`, `database/*.db`
+- [ ] Mensagens de commit referenciam os IDs das tasks do Azure Boards (`AB#ID`)
+- [ ] Azure Boards conectado ao repositório GitHub (opcional, para rastreabilidade automática)
+
+---
+
+> 💡 **Independente da opção escolhida**, configure o `.gitignore` antes do primeiro commit:
+> ```bash
+> # Peça ao Copilot para gerar o arquivo
+> # Prompt: "Gere um .gitignore para projeto Node.js com SQLite"
+> ```
 
 ---
 
@@ -341,7 +436,7 @@ Este checklist deve refletir o **Definition of Done** que o seu time estabeleceu
 - [ ] (Sugerido) Testes unitários criados e passando para tarefas de back-end e regras de negócio
 - [ ] **Code review** realizado por pelo menos um outro membro do time antes da integração
 - [ ] Frontend e backend integrados e funcionando
-- [ ] Código submetido ao **Azure Repos** (repositório central do projeto Azure DevOps)
+- [ ] Código submetido ao repositório do grupo — **Azure Repos** (Opção A) ou **GitHub** (Opção B) — com mensagem de commit referenciando a task
 - [ ] Documentação inline adequada
 - [ ] Sem erros no console ou warnings críticos
 - [ ] Não foram introduzidos débitos técnicos conhecidos
@@ -465,7 +560,7 @@ Alunos têm acesso ao **Azure for Students**, que oferece **USD 100 em créditos
 
 #### Serviço recomendado: Azure App Service (Free Tier F1)
 
-O **Azure App Service** hospeda aplicações Node.js diretamente do Azure Repos (integração nativa com o projeto Azure DevOps já criado).
+O **Azure App Service** hospeda aplicações Node.js diretamente do **Azure Repos** (integração nativa com o projeto Azure DevOps) ou do **GitHub** (caso o grupo tenha optado pelo caminho alternativo).
 
 **Passos para publicar via VS Code:**
 
